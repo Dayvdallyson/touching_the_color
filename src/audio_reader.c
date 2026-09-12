@@ -24,7 +24,7 @@ typedef struct {
 #pragma pack(pop)
 
 int main() {
-  FILE *file = fopen("audio.wav", "rb");
+  FILE *file = fopen("tue_cogulandia.wav", "rb");
   if (!file) {
     perror("Error opening file");
     return 1;
