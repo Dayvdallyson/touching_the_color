@@ -59,7 +59,7 @@ int main() {
 
   size_t bytesRead = fread(audioBuffer, 1, header.subchunk2Size, file);
 
-  printf("Successfully read %zu audio data bytes into memory.\n", bytesRead);
+  printf("Successfully read %zu audio data bytes into memory\n", bytesRead);
 
   int bytesPerSample = header.bitsPerSample / 8;
   uint32_t totalSamples = header.subchunk2Size / bytesPerSample;
