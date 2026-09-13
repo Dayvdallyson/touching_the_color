@@ -29,7 +29,6 @@ int main() {
     perror("Error opening file");
     return 1;
   }
-
   WavHeader header;
 
   if (fread(&header, sizeof(WavHeader), 1, file) != 1) {
@@ -59,7 +58,16 @@ int main() {
 
   size_t bytesRead = fread(audioBuffer, 1, header.subchunk2Size, file);
 
-  printf("Successfully read %zu audio data bytes into memory\n", bytesRead);
+  if (bytesRead != header.subchunk2Size) {
+    if (feof(file)) {
+      fprintf(stderr, "Unexpected end of file while reading audio data\n");
+    } else if (ferror(file)) {
+      perror("Error reading audio data");
+    }
+    free(audioBuffer);
+    fclose(file);
+    return 1;
+  }
 
   int bytesPerSample = header.bitsPerSample / 8;
   uint32_t totalSamples = header.subchunk2Size / bytesPerSample;
